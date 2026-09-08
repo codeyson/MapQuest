@@ -1,10 +1,11 @@
+import os
 import urllib.parse
 import requests
 
-main_api = "https://www.mapquestapi.com/directions/v2/route?"
+main_api = os.getenv("MAIN_API")
 orig = "Roma, Italia"
 dest = "Frascati, Italia"
-key = "EGVIJZBu6OlzjazQolRueK1VFVfoi30D"
+key = os.getenv("KEY")
 
 url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest})
 
