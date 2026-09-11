@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MapQuest Route Directions</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            background-color: #005fcc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004aae;
+        }
+
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+        }
+
+        .maneuver {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-left: 3px solid #005fcc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>MapQuest Route Directions</h1>
+
+        <form method="post">
+
+            <div class="form-group">
+                <label for="origin">Starting Location</label>
+
+                <input
+                    type="text"
+                    id="origin"
+                    name="origin"
+                    placeholder="e.g., Washington, D.C."
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destination</label>
+
+                <input
+                    type="text"
+                    id="destination"
+                    name="destination"
+                    placeholder="e.g., Baltimore, Md"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Get Directions
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+        <div class="error" id="error" role="alert">
+
+            <strong>Error:</strong>
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+        {% if result %}
+
+        <div class="result" id="result" role="alert">
+
+            <h3>
+                Directions from
+                {{ result.origin }}
+                to
+                {{ result.destination }}
+            </h3>
+
+            <p>
+                <strong>Trip Duration:</strong>
+                {{ result.duration }}
+            </p>
+
+            <p>
+                <strong>Distance:</strong>
+                {{ result.distance_km }} km
+            </p>
+
+
+            <div class="maneuvers">
+
+                <p>
+                    <strong>Maneuvers:</strong>
+                </p>
+
+                {% for m in result.maneuvers %}
+
+                <div class="maneuver">
+
+                    <strong>
+                        {{ m.narrative }}
+                    </strong>
+
+                    (<em>
+                        {{ m.distance_km }} km
+                    </em>)
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
