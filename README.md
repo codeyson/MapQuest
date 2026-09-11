@@ -61,7 +61,7 @@ python -m venv .venv
 
 3. Activate the Virtual Environment
 ```bash
-.venv\Scripts\Actvitate.ps1
+.venv\Scripts\actvitate
 ```
 
 4. Install Dependencies
