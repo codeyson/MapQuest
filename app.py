@@ -13,6 +13,7 @@ key = os.getenv("KEY")
 def index():
     result = None
     error = None
+    status_message = None
 
     if request.method == "POST":
         orig = request.form.get("origin", "").strip()
@@ -20,8 +21,10 @@ def index():
 
         if not orig or not dest:
             error = "Please provide both origin and destination."
+
         elif not main_api or not key:
             error = "MAIN_API or KEY environment variable is missing."
+
         else:
             try:
                 params = {
@@ -58,8 +61,29 @@ def index():
                             for each in route["maneuvers"]
                         ],
                     }
+
+                    status_message = (
+                        f"API Status: {json_status} = "
+                        "A successful route call."
+                    )
+
+                elif json_status == 402:
+                    error = (
+                        f"Status Code: {json_status}; "
+                        "Invalid user inputs for one or both locations."
+                    )
+
+                elif json_status == 611:
+                    error = (
+                        f"Status Code: {json_status}; "
+                        "Missing an entry for one or both locations."
+                    )
+
                 else:
-                    error = f"API returned status code: {json_status}"
+                    error = (
+                        f"For Status Code: {json_status}; "
+                        "Refer to the MapQuest API status codes."
+                    )
 
             except requests.exceptions.RequestException as e:
                 error = f"Request error: {str(e)}"
@@ -70,11 +94,10 @@ def index():
     return render_template(
         "index.html",
         result=result,
-        error=error
+        error=error,
+        status_message=status_message
     )
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-    
