@@ -103,6 +103,12 @@ def index():
                 "and a destination."
             )
 
+        elif orig.lower() == dest.lower():
+            error = (
+                "The starting location and destination "
+                "cannot be the same."
+            )
+
         elif not main_api or not key:
 
             error = (
@@ -346,9 +352,9 @@ def index():
 
                     result = {
 
-                        "origin": orig,
+                        "origin": orig.title(),
 
-                        "destination": dest,
+                        "destination": dest.title(),
 
                         "duration": route.get(
                             "formattedTime",
