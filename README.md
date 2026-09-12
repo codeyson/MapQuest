@@ -53,7 +53,18 @@ MapQuest/
 ```bash
 git clone https://github.com/codeyson/MapQuest.git
 ```
-2. Install Dependencies
+2. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+3. Activate the Virtual Environment
+```bash
+.venv\Scripts\actvitate
+```
+
+4. Install Dependencies
 ```bash
 python -m pip install -r requirements.txt
 ```
