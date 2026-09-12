@@ -326,6 +326,55 @@
             animation: slideDown 0.3s ease;
         }
 
+        .error-route {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+
+            border-bottom: 1px solid #fecaca;
+        }
+
+        .error-route small {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #991b1b;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 0.7px;
+        }
+
+        .error-route strong {
+            display: block;
+
+            color: var(--text);
+
+            overflow-wrap: anywhere;
+        }
+
+        .error-arrow {
+            color: var(--error);
+
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: var(--error);
+        }
+
+        .error-message strong {
+            font-weight: 800;
+        }
+
+
 
         /* =========================
            RESULTS
@@ -1041,7 +1090,7 @@
                         id="origin"
                         name="origin"
                         placeholder="e.g., Manila"
-                        value="{{ request.form.get('origin', '') }}"
+                        value=" "
                         autocomplete="address-line1"
                         required
                     >
@@ -1060,7 +1109,7 @@
                         id="destination"
                         name="destination"
                         placeholder="e.g., Batangas"
-                        value="{{ request.form.get('destination', '') }}"
+                        value=" "
                         autocomplete="address-line1"
                         required
                     >
@@ -1088,17 +1137,40 @@
 
         <div class="error" role="alert">
 
-            <strong>
-                Unable to find route
-            </strong>
+            <div class="error-route">
 
-            <br>
+                <div>
+                    <small>STARTING LOCATION</small>
+                    <strong>{{ request.form.get('origin', '') }}</strong>
+                </div>
 
-            {{ error }}
+                <div class="error-arrow" aria-hidden="true">
+                    →
+                </div>
+
+                <div>
+                    <small>DESTINATION</small>
+                    <strong>{{ request.form.get('destination', '') }}</strong>
+                </div>
+
+            </div>
+
+            <div class="error-message">
+
+                <strong>
+                    Unable to find route
+                </strong>
+
+                <br>
+
+                {{ error }}
+
+            </div>
 
         </div>
 
         {% endif %}
+
 
     </section>
 
